@@ -33,7 +33,7 @@ if(email && password  && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),/^(?=.*\d
 
     toast.success('Log in Successfully !', {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -58,7 +58,7 @@ if(email && password  && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),/^(?=.*\d
     <div className='flex justify-between'>
         <ToastContainer
 position="top-center"
-autoClose={5000}
+autoClose={3000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick
@@ -73,7 +73,7 @@ theme="light"
           <img src="public/logo.png" alt="logo" />
           <p className="font-poppins ml-[50px] text-[22px]">
             Facebook helps you connect and share <br /> with the people in your
-            life.
+            life...
           </p>
         </div>
       </div>
@@ -101,7 +101,7 @@ theme="light"
           <button onClick={handle_log_in} className="text-white bg-color1 w-full py-4 rounded-xl mt-9 font-bold text-[20px] ">Log In</button>
        <div className="text-center mt-5 border-b-2 pb-5 w-full">
 
-       <Link onClick={()=>setShowModal(true)} className="text-color1 font-medium text-[15px] underline text-center ">Forgotten password?</Link>
+       <Link onClick={()=>setShowModal(true)} className="text-color1 font-medium text-[15px] hover:underline text-center ">Forgotten password?</Link>
        {showmodal &&
        
        <Modal onClose={()=> setShowModal(false)} />

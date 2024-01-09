@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Modal from '../components/Modal'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { EyeOff,  Eye } from 'lucide-react';
@@ -17,7 +18,7 @@ function Signup() {
     let [emailerr,setEmailerr]=useState();
     let [passworderr,setPassworderr]=useState();
     let [passwordShow,setPasswordShow]=useState(false)
-
+    let [showmodal,setShowModal]=useState(false)
     let handle_first_name=(e)=>{
         setFirstName(e.target.value);
         setFirstNameerr()
@@ -41,11 +42,11 @@ if(! firstName, !lastName, !email, !password){
     setEmailerr('Email is required !')
     setPassworderr('Password is required !')
 }
-else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),!/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
+else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),  !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
     setEmailerr("This is not a mail addres !");
     setPassworderr("Password minimum eight length, one special character and one number !"  );
   }
-  if(firstName && lastName && email && password && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password))
+  if(firstName && lastName && email && password && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password))
   {
     const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
@@ -82,7 +83,7 @@ createUserWithEmailAndPassword(auth, email, password)
     <div className="flex justify-between">
         <ToastContainer
 position="top-center"
-autoClose={5000}
+autoClose={3000}
 hideProgressBar={false}
 newestOnTop={false}
 closeOnClick
@@ -138,7 +139,11 @@ theme="light"
           <button onClick={handle_submit} className="text-white bg-color1 w-full py-4 rounded-xl mt-9 font-bold text-[20px] ">Sign Up</button>
        <div className="text-center mt-5">
 
-       <Link className="text-color1 font-medium text-[15px] underline text-center">Forgotten password?</Link>
+       <Link onClick={()=>setShowModal(true)}  className="text-color1 font-medium text-[15px] underline text-center">Forgotten password?</Link>
+       {showmodal &&
+       
+       <Modal onClose={()=> setShowModal(false)} />
+       }
        </div>
        <div className="mt-10 text-center">
         <Link to={"/login"} className="text-[20px] font-bold text-white bg-color2 py-4 px-16  rounded-lg">Already have </Link>
