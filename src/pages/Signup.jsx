@@ -121,7 +121,7 @@ theme="light"
           <img src="public/logo.png" alt="logo" />
           <p className="font-poppins ml-[50px] text-[22px]">
             Facebook helps you connect and share <br /> with the people in your
-            life.
+            life...
           </p>
         </div>
       </div>
