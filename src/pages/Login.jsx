@@ -6,7 +6,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
 import { EyeOff, Eye } from 'lucide-react';
+import { useDispatch } from "react-redux";
+import { userloginfo } from "../slice/userslice";
 function Login() {
+  let dispatch= useDispatch()
 let navigate=useNavigate()
     const auth = getAuth();
     let [showmodal,setShowModal]=useState(false)
@@ -31,6 +34,10 @@ if(email && password  && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),/^(?=.*\d
     signInWithEmailAndPassword(auth, email, password)
   .then((user) => {
 
+    dispatch(userloginfo(user.user))
+    localStorage.setItem('userdata' , JSON.stringify(user.user))
+
+console.log(user);
     toast.success('Log in Successfully !', {
         position: "top-center",
         autoClose: 3000,

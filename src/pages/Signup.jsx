@@ -4,9 +4,11 @@ import Modal from '../components/Modal'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import { EyeOff,  Eye } from 'lucide-react';
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification  } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile   } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+
 function Signup() {
+ 
     const auth = getAuth();
     let navigate=useNavigate()
     let [firstName,setFirstName]=useState();
@@ -36,36 +38,57 @@ function Signup() {
         setPassworderr()
     }
 let handle_submit=()=>{
-if(! firstName, !lastName, !email, !password){
+if(! firstName, !lastName){
     setFirstNameerr('First-Name is required !')
     setLastNameerr('Last-Name is required !')
-    setEmailerr('Email is required !')
-    setPassworderr('Password is required !')
+  
 }
-else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email),  !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)) {
+if(!email){
+  setEmailerr('Email is required !')
+   
+}
+else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
     setEmailerr("This is not a mail addres !");
+  }
+  if(!password){
+    setPassworderr("Password is required !")
+  }
+  else if(  !/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password)){
+
     setPassworderr("Password minimum eight length, one special character and one number !"  );
   }
-  if(firstName && lastName && email && password && /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password))
+  if(firstName && lastName && email && password && /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email) && /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password))
   {
     const auth = getAuth();
 createUserWithEmailAndPassword(auth, email, password)
   .then((user) => {
+
     sendEmailVerification(auth.currentUser)
-    .then(() => {     
+    .then(() => {  
+      updateProfile(auth.currentUser, {
+        displayName: firstName + lastName,
+         photoURL: "public/Ellipse1.png"
+      }).then(() => {
+
+  
+
         toast.success('Sign Up Successfully !', {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
-            setTimeout(() => {
-                navigate('/login')
-            }, 3000);
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+          setTimeout(() => {
+              navigate('/login')
+          }, 2000);
+      }).catch((error) => {
+   console.log(error);
+      }); 
+       
         });
         
   })
